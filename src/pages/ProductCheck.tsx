@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import moment from "moment";
 import { productCheckAction } from "../actions/product_check_action";
 import { ProductCheckResponse } from "../types/product_check_types";
 
@@ -57,30 +58,36 @@ function ProductCheck() {
                 <div className="flex justify-between space-x-4 p-4">
                     <div className="flex-1 flex flex-col space-y-4">
                         <img src={productDetails?.productDetails.image} alt="product image" />
-                        <div className="flex flex-col items-start">
-                            <div className="flex space-x-3">
-                                <h3 className="text-lg font-semibold text-gray-700">Product Name: </h3>
-                                <p className="text-gray-600">{productDetails?.productDetails.name}</p>
-                            </div>
-                            <div className="flex space-x-3">
-                                <h2 className="text-lg font-semibold text-gray-700">Product ID:</h2>
-                                <p className="text-gray-600">{productId}</p>
-                            </div>
-                            <p className="text-gray-600">{productDetails?.productDetails.description}</p>
+                        <div className="flex flex-col items-start space-y-2">
+                            <DataViewer label="Product Name" data={productDetails?.productDetails.name ?? ""} />
+                            <DataViewer label="Product ID" data={productId} />
+                            <DataViewer label="Package ID" data={productDetails?.inventoryDetails.packageId ?? ""} />
+                            <p className="w-full flex justify-start text-gray-600 border p-3">{productDetails?.productDetails.description}</p>
                         </div>
                     </div>
-                    <div className="flex-1 flex flex-col items-start">
-                        <div className="flex space-x-3">
-                            <h2 className="text-lg font-semibold text-gray-700">Inventory ID:</h2>
-                            <p className="text-gray-600">{inventoryId}</p>
-                        </div>
-
+                    <div className="flex-1 flex flex-col items-start space-y-2 py-3 px-6">
+                        <DataViewer label="Product Code" data={productDetails?.productDetails.productCode ?? ""} />
+                        <DataViewer label="Inventory ID" data={inventoryId} />
+                        <DataViewer label="Width" data={`${productDetails?.productDetails.width} ${productDetails?.productDetails.dimensionUnit ?? ""}`} />
+                        <DataViewer label="Height" data={`${productDetails?.productDetails.width} ${productDetails?.productDetails.dimensionUnit ?? ""}`} />
+                        <DataViewer label="Depth" data={`${productDetails?.productDetails.width} ${productDetails?.productDetails.dimensionUnit ?? ""}`} />
+                        <DataViewer label="Weight" data={`${productDetails?.productDetails.weight} ${productDetails?.productDetails.massUnit ?? ""}`} />
+                        <DataViewer label="Production Date" data={moment(productDetails?.inventoryDetails.productionDate).format('MMMM Do YYYY')} />
+                        <DataViewer label="Expiration Date" data={moment(productDetails?.inventoryDetails.expirationDate).format('MMMM Do YYYY')} />
                     </div>
                 </div>
-
             </div>
         </div>
     );
+}
+
+function DataViewer({ label, data }: { label: string, data: string }) {
+    return (
+        <div className="flex space-x-3">
+            <h2 className="text-lg font-semibold text-gray-700">{label}:</h2>
+            <p className="text-gray-600">{data}</p>
+        </div>
+    )
 }
 
 export default ProductCheck;

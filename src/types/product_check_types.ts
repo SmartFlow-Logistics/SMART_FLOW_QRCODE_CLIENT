@@ -2,11 +2,11 @@ export interface Inventory {
   id: string;
   productId: string;
   packageId: string;
-  expirationDate: string;
-  productionDate: string;
+  expirationDate: Date;
+  productionDate: Date;
   quantityAvailable: number;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface Product {
@@ -28,6 +28,6 @@ export interface Product {
 }
 
 export interface ProductCheckResponse {
-    inventoryDetails: Inventory;
-    productDetails: Product;
+  inventoryDetails: Inventory;
+  productDetails: Product;
 }
