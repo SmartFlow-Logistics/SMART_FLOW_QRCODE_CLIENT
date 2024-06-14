@@ -1,5 +1,6 @@
 import axios from "axios";
-import { SERVER_LINK } from "./config-global";
+
+const SERVER_LINK = "http://localhost:3000";
 
 const api = axios.create({
   baseURL: SERVER_LINK,
