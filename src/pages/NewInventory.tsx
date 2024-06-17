@@ -4,13 +4,13 @@ import { createNewInventory } from '../actions/inventory_action';
 import { NewInventoryRequest } from '../types/inventory_types';
 
 const products = [
-    { id: '1cc991f8-485d-4ce0-ae0a-e8ad7c19c7b0', name: 'Tena 5L Food Oil' },
+    { id: '14b07357-8b25-4493-b7dc-95fd4a65b864', name: 'Tena 5L Food Oil' },
     { id: 'ffe47eda-8044-489c-9d5a-429ce7d6f0f3', name: 'T1L-123' },
     { id: '3b409e49-58f5-4148-9c4a-2740bf87cba5', name: 'Tena 3L Food Oil' },
 ];
 
 const packages: Record<string, { id: string; name: string }[]> = {
-    '1cc991f8-485d-4ce0-ae0a-e8ad7c19c7b0': [{ id: "908beb1f-47d0-447e-bca4-9dcb4ca00bc3", name: "12 pc pack" }],
+    '14b07357-8b25-4493-b7dc-95fd4a65b864': [{ id: "efc594c3-afda-42ea-922a-bc89dc37680b", name: "12 pc pack" }],
     'ffe47eda-8044-489c-9d5a-429ce7d6f0f3': [{ id: "9c43e332-4d1f-4eed-942c-6d58332ba6bc", name: "12 pc Pack[1L]" }],
     '3b409e49-58f5-4148-9c4a-2740bf87cba5': [{ id: "3ae0f6f3-d44e-4bea-a696-f3d2eb662080", name: "12 pc Pack[3L]" }],
 };
