@@ -1,23 +1,19 @@
-import React, { useState } from 'react'
-import Swal from 'sweetalert2'
-import { createNewInventory } from '../actions/inventory_action'
-import { NewInventoryRequest } from '../types/inventory_types'
+import React, { useState } from 'react';
+import Swal from 'sweetalert2';
+import { createNewInventory } from '../actions/inventory_action';
+import { NewInventoryRequest } from '../types/inventory_types';
 
 const products = [
-    { id: 'f5263511-43cc-41dd-a307-986902059cc1', name: 'Muya biskut' },
-    { id: '2', name: 'Product 2' },
-    { id: '3', name: 'Product 3' },
-    { id: '4', name: 'Product 4' },
-    { id: '5', name: 'Product 5' },
-]
+    { id: '1cc991f8-485d-4ce0-ae0a-e8ad7c19c7b0', name: 'Tena 5L Food Oil' },
+    { id: 'ffe47eda-8044-489c-9d5a-429ce7d6f0f3', name: 'T1L-123' },
+    { id: '3b409e49-58f5-4148-9c4a-2740bf87cba5', name: 'Tena 3L Food Oil' },
+];
 
-const packages = [
-    { id: '1dbfa3c9-0212-4ec5-9a8d-d7c51289c2d1', name: 'Carton' },
-    { id: '2', name: 'Package 2' },
-    { id: '3', name: 'Package 3' },
-    { id: '4', name: 'Package 4' },
-    { id: '5', name: 'Package 5' },
-]
+const packages: Record<string, { id: string; name: string }[]> = {
+    '1cc991f8-485d-4ce0-ae0a-e8ad7c19c7b0': [{ id: "908beb1f-47d0-447e-bca4-9dcb4ca00bc3", name: "12 pc pack" }],
+    'ffe47eda-8044-489c-9d5a-429ce7d6f0f3': [{ id: "9c43e332-4d1f-4eed-942c-6d58332ba6bc", name: "12 pc Pack[1L]" }],
+    '3b409e49-58f5-4148-9c4a-2740bf87cba5': [{ id: "3ae0f6f3-d44e-4bea-a696-f3d2eb662080", name: "12 pc Pack[3L]" }],
+};
 
 function NewInventory() {
 
@@ -28,9 +24,9 @@ function NewInventory() {
         location: '',
         productionDate: new Date().toISOString().split('T')[0],
         expirationDate: ''
-    })
+    });
 
-    const [isPending, setIsPending] = useState(false)
+    const [isPending, setIsPending] = useState(false);
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLSelectElement | HTMLTextAreaElement | HTMLInputElement>
@@ -43,23 +39,23 @@ function NewInventory() {
     };
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault()
+        event.preventDefault();
         const data: NewInventoryRequest = {
             productId: formData.productId,
             packageId: formData.packageId,
             expirationDate: new Date(formData.expirationDate),
             productionDate: new Date(formData.productionDate),
             quantityAvailable: Number(formData.quantity)
-        }
-        setIsPending(true)
-        const response = await createNewInventory(data)
+        };
+        setIsPending(true);
+        const response = await createNewInventory(data);
         if (typeof (response) !== 'string') {
-            setIsPending(false)
+            setIsPending(false);
             Swal.fire({
                 icon: 'success',
                 title: 'New Inventory created successfully',
                 text: response.message,
-            })
+            });
             // reset the form
             setFormData({
                 productId: '',
@@ -68,17 +64,19 @@ function NewInventory() {
                 location: '',
                 productionDate: new Date().toISOString().split('T')[0],
                 expirationDate: ''
-            })
+            });
 
         } else {
-            setIsPending(false)
+            setIsPending(false);
             Swal.fire({
                 icon: 'error',
                 title: 'Error!',
-                text: 'response',
-            })
+                text: response,
+            });
         }
     }
+    const selectedPackages = packages[formData.productId] || [];
+
     return (
         <div>
             <div className='bg-cyan-900 py-6 text-white'>
@@ -108,7 +106,7 @@ function NewInventory() {
                         value={formData.packageId}
                     >
                         <option value="">Select Package</option>
-                        {packages.map(packageV => (
+                        {selectedPackages.map(packageV => (
                             <option key={packageV.id} value={packageV.id}>{packageV.name}</option>
                         ))}
                     </select>
@@ -161,4 +159,4 @@ function NewInventory() {
     )
 }
 
-export default NewInventory
+export default NewInventory;
