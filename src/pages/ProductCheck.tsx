@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import moment from "moment";
 import { productCheckAction } from "../actions/product_check_action";
 import { ProductCheckResponse } from "../types/product_check_types";
+import { useLocation } from "react-router-dom";
 
-type Params = {
-    inventoryId: string;
-    productId: string;
-};
 
 function ProductCheck() {
-    const { inventoryId, productId } = useParams<Params>();
+    // select the inventoryId and productId from the URL query parameters
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const inventoryId = searchParams.get("inventoryId") ?? '';
+    const productId = searchParams.get("productId") ?? '';
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -19,10 +19,6 @@ function ProductCheck() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                if (!productId || !inventoryId) {
-                    return
-                }
-                
                 const response = await productCheckAction(productId, inventoryId);
 
                 if (typeof response === 'string') {
@@ -40,15 +36,6 @@ function ProductCheck() {
 
         fetchData();
     }, [productId, inventoryId]);
-
-    // Ensure the parameters are defined
-    if (!inventoryId || !productId) {
-        return (
-            <div className="flex justify-center items-center min-h-screen">
-                <div className="text-red-600 text-xl font-semibold">Error: Missing inventoryId or productId</div>
-            </div>
-        );
-    }
 
     if (isLoading) {
         return (
