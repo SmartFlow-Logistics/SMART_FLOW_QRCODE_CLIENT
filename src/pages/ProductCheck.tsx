@@ -57,19 +57,19 @@ function ProductCheck() {
         <div className="min-h-screen bg-gray-100 p-6 flex items-center justify-center">
             <div className="flex flex-col items-start bg-white shadow-lg rounded-lg p-8 w-full">
                 <h1 className="text-4xl font-bold text-gray-900 mb-6">{productDetails?.productDetails.name}</h1>
-                <div className="flex justify-between space-x-4 p-4">
+                <div className="flex max-md:flex-col justify-between space-x-4 p-4">
                     <div className="flex-1 flex flex-col space-y-4">
                         <img src={productDetails?.productDetails.image} alt="product image" />
                         <div className="flex flex-col items-start space-y-2">
                             <DataViewer label="Product Name" data={productDetails?.productDetails.name ?? ""} />
-                            <DataViewer label="Product ID" data={productId} />
-                            <DataViewer label="Package ID" data={productDetails?.inventoryDetails.packageId ?? ""} />
-                            <p className="w-full flex justify-start text-gray-600 border p-3">{productDetails?.productDetails.description}</p>
+                            <DataViewer label="Product Code" data={productDetails?.productDetails.productCode ?? ""} />
+                            <div className="flex flex-col items-start space-x-0 w-full">
+                                <h2 className="text-lg font-semibold text-gray-700 max-md:text-base">Description:</h2>
+                                <p className="w-full flex justify-start text-gray-600 border p-3">{productDetails?.productDetails.description}</p>
+                            </div>
                         </div>
                     </div>
-                    <div className="flex-1 flex flex-col items-start space-y-2 py-3 px-6">
-                        <DataViewer label="Product Code" data={productDetails?.productDetails.productCode ?? ""} />
-                        <DataViewer label="Inventory ID" data={inventoryId} />
+                    <div className="flex-1 flex flex-col items-start space-y-2 py-3 px-6 max-md:px-none">
                         <DataViewer label="Width" data={`${productDetails?.productDetails.width} ${productDetails?.productDetails.dimensionUnit ?? ""}`} />
                         <DataViewer label="Height" data={`${productDetails?.productDetails.width} ${productDetails?.productDetails.dimensionUnit ?? ""}`} />
                         <DataViewer label="Depth" data={`${productDetails?.productDetails.width} ${productDetails?.productDetails.dimensionUnit ?? ""}`} />
@@ -85,8 +85,8 @@ function ProductCheck() {
 
 function DataViewer({ label, data }: { label: string, data: string }) {
     return (
-        <div className="flex space-x-3">
-            <h2 className="text-lg font-semibold text-gray-700">{label}:</h2>
+        <div className="flex max-md:flex-col max-md:items-start max-md:space-x-0 space-x-3">
+            <h2 className="text-lg font-semibold text-gray-700 max-md:text-base">{label}:</h2>
             <p className="text-gray-600">{data}</p>
         </div>
     )
