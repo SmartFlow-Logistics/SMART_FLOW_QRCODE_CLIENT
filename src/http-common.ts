@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const SERVER_LINK = "http://localhost:3000";
+const SERVER_LINK = "http://localhost:3004";
 
 const api = axios.create({
   baseURL: SERVER_LINK,
