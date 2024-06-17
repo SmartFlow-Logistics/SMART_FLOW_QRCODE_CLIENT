@@ -3,6 +3,22 @@ import Swal from 'sweetalert2'
 import { createNewInventory } from '../actions/inventory_action'
 import { NewInventoryRequest } from '../types/inventory_types'
 
+const products = [
+    { id: 'f5263511-43cc-41dd-a307-986902059cc1', name: 'Muya biskut' },
+    { id: '2', name: 'Product 2' },
+    { id: '3', name: 'Product 3' },
+    { id: '4', name: 'Product 4' },
+    { id: '5', name: 'Product 5' },
+]
+
+const packages = [
+    { id: '1dbfa3c9-0212-4ec5-9a8d-d7c51289c2d1', name: 'Carton' },
+    { id: '2', name: 'Package 2' },
+    { id: '3', name: 'Package 3' },
+    { id: '4', name: 'Package 4' },
+    { id: '5', name: 'Package 5' },
+]
+
 function NewInventory() {
 
     const [formData, setFormData] = useState({
@@ -17,7 +33,7 @@ function NewInventory() {
     const [isPending, setIsPending] = useState(false)
 
     const handleInputChange = (
-        e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+        e: React.ChangeEvent<HTMLSelectElement | HTMLTextAreaElement | HTMLInputElement>
     ) => {
         const { name, value } = e.target;
         setFormData((prevFormData) => ({
@@ -70,24 +86,32 @@ function NewInventory() {
             </div>
             <form onSubmit={handleSubmit}>
                 <div className='flex flex-col p-6 items-start space-y-3 w-full'>
-                    <label className='text-lg font-semibold'>Product ID</label>
-                    <input
-                        type='text'
+                    <label className='text-lg font-semibold'>Product</label>
+                    <select
                         className='border p-2 w-full'
                         onChange={handleInputChange}
                         name='productId'
                         value={formData.productId}
-                    />
+                    >
+                        <option value="">Select Product</option>
+                        {products.map(product => (
+                            <option key={product.id} value={product.id}>{product.name}</option>
+                        ))}
+                    </select>
                 </div>
                 <div className='flex flex-col p-6 items-start space-y-3 w-full'>
-                    <label className='text-lg font-semibold'>Package ID</label>
-                    <input
-                        type='text'
+                    <label className='text-lg font-semibold'>Package</label>
+                    <select
                         className='border p-2 w-full'
                         onChange={handleInputChange}
                         name='packageId'
                         value={formData.packageId}
-                    />
+                    >
+                        <option value="">Select Package</option>
+                        {packages.map(packageV => (
+                            <option key={packageV.id} value={packageV.id}>{packageV.name}</option>
+                        ))}
+                    </select>
                 </div>
                 <div className='flex flex-col p-6 items-start space-y-3 w-full'>
                     <label className='text-lg font-semibold'>Quantity</label>
