@@ -10,11 +10,11 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
       <Route index element={<Home />} />
-      <Route path="check" element={<ProductCheck />} />
+      <Route path="check/inventoryId/:inventoryId/productId/:productId" element={<ProductCheck />} />
       <Route path="newInventory" element={<NewInventory />} />
     </Route>
   )
-)
+);
 
 function App() {
 
